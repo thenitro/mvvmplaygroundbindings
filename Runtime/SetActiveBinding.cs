@@ -15,14 +15,14 @@ namespace MVVM.Bindings
             _isInverted = isInverted;
         }
 
-        public SetActiveBinding(bool value, GameObject target, bool isInverted) : base(value)
+        public SetActiveBinding(bool value, GameObject target, bool isInverted = false) : base(value)
         {
             _target = target;
             _isInverted = isInverted;
         }
 
-        protected override void OnUpdate(bool value)
-        {
+        protected override void OnUpdate(bool value) {
+            if (_target == null) return;
             _target.SetActive(_isInverted ? !value : value);
         }
     }

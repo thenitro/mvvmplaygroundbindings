@@ -11,13 +11,13 @@ using Object = UnityEngine.Object;
 namespace MVVM.Bindings
 {
     public class ListBinding<TView, TViewModel> : BaseValueBinding<IEnumerable<TViewModel>> 
-        where TViewModel : BaseViewModel
+        where TViewModel : BaseViewModel<TViewModel>
         where TView : BaseView<TViewModel>
     {
         private readonly Transform _container;
         private readonly TView _prefab;
         
-        private HashSet<TView> _instantiatedViews; 
+        private HashSet<TView> _instantiatedViews;
 
         public ListBinding(TView prefab, Transform container, IObservableValue<IEnumerable<TViewModel>> observableValue, IEnumerable<TView> instantiatedViews = null) : base(observableValue)
         {
@@ -51,7 +51,7 @@ namespace MVVM.Bindings
         private TView Instantiate()
         {
             if (_prefab == null) throw new ArgumentNullException("Prefab is not specified, but tried to instantiate");
-            if (_container == null) throw new ArgumentNullException("Containter for new element is null");
+            if (_container == null) throw new ArgumentNullException("Container for new element is null");
             return Object.Instantiate(_prefab, _container);
         } 
 
